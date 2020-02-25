@@ -1,5 +1,5 @@
 from time import sleep
-
+import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -23,30 +23,36 @@ finally:
     print(driver.current_url + " loaded")
 
 categories = driver.find_elements_by_css_selector("ul#box-apps-menu li.app")
+print("There are " + str(len(categories)) + " categories in this menu")
 i = 1
+sleep(2)
 
 while i < len(categories) + 1:
-    try:
-        driver.find_element_by_css_selector("ul#box-apps-menu li.app:nth-child({0}) a".format(str(i))).click()
-    finally:
-        sleep(2)
+    driver.find_element_by_css_selector("ul#box-apps-menu li.app:nth-child({0}) a".format(str(i))).click()
+    wait = WebDriverWait(driver, 300)
+    element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "panel-heading")))
+
+    sleep(2)
 
     subcategories = driver.find_elements_by_css_selector("ul#box-apps-menu li.app:nth-child({0}) li".format(str(i)))
     print(len(subcategories))
     category_name = driver.find_element_by_css_selector("#box-apps-menu li.app.selected a span.name").text
     j = 2
 
-    print(category_name.text + " => " + driver.find_element_by_class_name("panel-heading").text)
+    try:
+        print(category_name + " => " + driver.find_element_by_class_name("panel-heading").text)
+    except selenium.common.exceptions.NoSuchElementException:
+        print("There is no header")
 
     while len(subcategories) >= j:
         driver.find_element_by_css_selector("ul#box-apps-menu li.app.selected li:nth-child({0})".format(str(j))).click()
         sleep(2)
-        print(category_name + " => " + driver.find_element_by_class_name("panel-heading").text)
+        try:
+            print(category_name + " => " + driver.find_element_by_class_name("panel-heading").text)
+        except selenium.common.exceptions.NoSuchElementException:
+            print("There is no header")
         j += 1
     i += 1
 
-driver.implicitly_wait(10)
-
-# driver.find_elements_by_css_selector("ul#box-apps-menu ul.docs li.doc").click()
-
-# driver.close()
+sleep(10)
+driver.close()
