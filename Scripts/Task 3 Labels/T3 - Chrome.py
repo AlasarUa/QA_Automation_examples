@@ -1,5 +1,8 @@
-from time import sleep
+# Сделайте сценарий, проверяющий наличие стикеров у всех товаров в учебном приложении litecart на главной странице.
+# Стикеры - это полоски в левом верхнем углу изображения товара, на которых написано New или Sale или что-нибудь другое.
+# Сценарий должен проверять, что у каждого товара имеется ровно один стикер.
 
+from time import sleep
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By

@@ -1,5 +1,13 @@
-from time import sleep
+# Сделайте сценарий, который проверяет, что при клике на товар открывается правильная страница товара в учебном приложении litecart.
+# 1) Открыть главную страницу
+# 2) Кликнуть по первому товару в категории Campaigns
+# 3) Проверить, что открывается страница правильного товара
+# Более точно, проверить, что
+# а) совпадает текст названия товара
+# б) совпадает цена (обе цены)
+# Кроме того, проверить стили цены на главной странице и на странице товара -- первая цена серая, зачёркнутая, маленькая, вторая цена красная жирная, крупная.
 
+from time import sleep
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -97,3 +105,5 @@ else:
     print(product_main.get("campaign_price_style") + ", " + product_main.get("campaign_price_color") + ", " + product_main.get("campaign_price_decoration"))
     print(product_page.get("campaign_price_style") + ", " + product_page.get("campaign_price_color") + ", " + product_page.get("campaign_price_decoration"))
 
+sleep(10)
+driver.close()
